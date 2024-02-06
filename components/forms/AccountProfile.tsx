@@ -37,7 +37,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       profile_photo: "",
       name: "",
       username: "",
-     
+
       bio: "",
     },
   });
@@ -56,6 +56,7 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
         className="flex flex-col justify-start gap-10"
         onSubmit={form.handleSubmit(onSubmit)}
       >
+        {/* image form feild */}
         <FormField
           control={form.control}
           name="profile_photo"
@@ -93,11 +94,13 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
             </FormItem>
           )}
         />
+
+        {/* name form feild */}
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-3 w-full">
+            <FormItem className="flex flex-col gap-3 w-full">
               {/* w-full means full width of container not screen */}
               <FormLabel className="text-base-semibold text-light-2">
                 Name
@@ -112,11 +115,13 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
             </FormItem>
           )}
         />
+
+        {/* username */}
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-3 w-full">
+            <FormItem className="flex flex-col gap-3 w-full">
               {/* w-full means full width of container not screen */}
               <FormLabel className="text-base-semibold text-light-2">
                 Username
@@ -132,14 +137,15 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
           )}
         />
 
+        {/* bio */}
         <FormField
           control={form.control}
           name="bio"
           render={({ field }) => (
-            <FormItem className="flex items-center gap-3 w-full">
+            <FormItem className="flex flex-col gap-3 w-full">
               {/* w-full means full width of container not screen */}
               <FormLabel className="text-base-semibold text-light-2">
-                bio
+                Bio
               </FormLabel>
               <FormControl className="flex-1 text-base-semibold text-gray-200">
                 <Textarea
@@ -151,7 +157,9 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" className="bg-primary-500">
+          Submit
+        </Button>
       </form>
     </Form>
   );
