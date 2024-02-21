@@ -21,6 +21,10 @@ const nextConfig = {
       },
     ],
   },
+  experimental: {
+    serverActions: true,
+    serverComponentsExternalPackages: ["mongoose"],
+  },
 };
 
 export default nextConfig;
