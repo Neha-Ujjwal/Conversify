@@ -237,8 +237,8 @@ export async function addCommentToThread(
     await originalThread.save();
 
     revalidatePath(path);
-  } catch (error: any) {
-    console.error("Error while adding comment:", error .message);
+  } catch (err) {
+    console.error("Error while adding comment:", err);
     throw new Error("Unable to add comment");
   }
 }
