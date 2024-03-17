@@ -1,12 +1,17 @@
-import ThreadCard from "@/components/cards/ThreadCard";
-import { fetchThreadById } from "@/lib/actions/thread.actions";
-import { fetchUser } from "@/lib/actions/user.actions";
-import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import Comment from "@/components/forms/Comment";
+import { currentUser } from "@clerk/nextjs";
 
-const page = async ({ params }: { params: { id: string } }) => {
+import Comment from "@/components/forms/Comment";
+import ThreadCard from "@/components/cards/ThreadCard";
+
+import { fetchUser } from "@/lib/actions/user.actions";
+import { fetchThreadById } from "@/lib/actions/thread.actions";
+
+export const revalidate = 0;
+
+async function page({ params }: { params: { id: string } }) {
   if (!params.id) return null;
+
   const user = await currentUser();
   if (!user) return null;
 
@@ -19,10 +24,9 @@ const page = async ({ params }: { params: { id: string } }) => {
     <section className="relative">
       <div>
         <ThreadCard
-          key={thread._id}
           id={thread._id}
-          parentId={thread.parentId}
           currentUserId={user.id}
+          parentId={thread.parentId}
           content={thread.text}
           author={thread.author}
           community={thread.community}
@@ -30,20 +34,22 @@ const page = async ({ params }: { params: { id: string } }) => {
           comments={thread.children}
         />
       </div>
+
       <div className="mt-7">
         <Comment
-          threadId={thread.id}
-          currentUserImg={userInfo.image}
-          currentUserId={JSON.stringify(userInfo._id)} //this is from database
+          threadId={params.id}
+          currentUserImg={user.imageUrl}
+          currentUserId={JSON.stringify(userInfo._id)}
         />
       </div>
+
       <div className="mt-10">
         {thread.children.map((childItem: any) => (
           <ThreadCard
             key={childItem._id}
             id={childItem._id}
+            currentUserId={user.id}
             parentId={childItem.parentId}
-            currentUserId={childItem.id}
             content={childItem.text}
             author={childItem.author}
             community={childItem.community}
@@ -55,6 +61,6 @@ const page = async ({ params }: { params: { id: string } }) => {
       </div>
     </section>
   );
-};
+}
 
 export default page;

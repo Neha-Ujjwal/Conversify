@@ -16,8 +16,6 @@ import { Button } from "../ui/button";
 import { createThread } from "@/lib/actions/thread.actions";
 import { useOrganization } from "@clerk/nextjs";
 
-// import { updateUser } from "@/lib/actions/user.actions";
-
 interface Props {
   user: {
     id: string;
@@ -46,21 +44,14 @@ const PostThread = ({ userId }: { userId: string }) => {
 
   const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
     // await createThead
-    if (!organization) {
-      await createThread({
-        text: values.thread,
-        author: userId,
-        communityId: null,
-        path: pathname,
-      });
-    } else {
-      await createThread({
-        text: values.thread,
-        author: userId,
-        communityId: organization.id,
-        path: pathname,
-      });
-    }
+
+    console.log("ORG ID", organization?.id);
+    await createThread({
+      text: values.thread,
+      author: userId,
+      communityId: organization?.id || null,
+      path: pathname,
+    });
 
     router.push("/");
   };

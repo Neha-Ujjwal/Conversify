@@ -16,7 +16,7 @@ import {
   deleteCommunity,
   removeUserFromCommunity,
   updateCommunityInfo,
-} from "../../../../lib/actions/community.action";
+} from "@/lib/actions/community.action";
 
 // Resource: https://clerk.com/docs/integration/webhooks#supported-events
 // Above document lists the supported events
@@ -36,7 +36,11 @@ type Event = {
 
 export const POST = async (request: Request) => {
   const payload = await request.json();
+  console.log(payload);
   const header = headers();
+
+  console.log("hellloooo");
+  console.log("hello----------------------", Event);
 
   const heads = {
     "svix-id": header.get("svix-id"),
@@ -67,6 +71,8 @@ export const POST = async (request: Request) => {
     // Show what evnt?.data sends from above resource
     const { id, name, slug, logo_url, image_url, created_by } =
       evnt?.data ?? {};
+
+    console.log("comuunity crated");
 
     try {
       // @ts-ignore
